@@ -1,3 +1,10 @@
+"""
+this program performs the explicit or implicit Euler integration for a mass on a spring
+it also can calculate the analytic solution to the problem
+using these solutions, global and truncation error and normalized energy can be calculated
+can choose which values to plot by uncommenting lines at the end
+"""
+
 import numpy as np
 import matplotlib.pyplot as plt
 

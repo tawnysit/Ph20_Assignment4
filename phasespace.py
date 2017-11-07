@@ -1,3 +1,11 @@
+"""
+performs the sympletic Euler method for a mass on a spring
+uses previously defined methods from euler.py (explicit, implicit, analytic)
+calculate normalized energy for all methods using function definied in euler.py
+plots phase-space geometries from sympletic and other methods
+plot energies of sympletic and analytic solutions
+"""
+
 import numpy as np
 import matplotlib.pyplot as plt
 import euler
