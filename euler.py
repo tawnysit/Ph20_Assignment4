@@ -9,8 +9,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # calculates mass on spring using explicit Euler method
-def explicit(total_steps, step_size, x_0, v_0):
-    timesteps = np.arange(0, total_steps, step_size)
+def explicit(start, end, step_size, x_0, v_0):
+    steps = (end-start)/step_size
+    timesteps = np.linspace(start, end, steps+1)
     x_values = np.zeros(len(timesteps))
     v_values = np.zeros(len(timesteps))
     x_values[0] = x_0
@@ -21,8 +22,9 @@ def explicit(total_steps, step_size, x_0, v_0):
     return x_values, v_values
 
 # calculates mass on spring using implicit Euler method
-def implicit(total_steps, step_size, x_0, v_0):
-    timesteps = np.arange(0, total_steps, step_size)
+def implicit(start, end, step_size, x_0, v_0):
+    steps = (end-start)/step_size
+    timesteps = np.linspace(start, end, steps+1)
     x_values = np.zeros(len(timesteps))
     v_values = np.zeros(len(timesteps))
     x_values[0] = x_0
@@ -33,8 +35,9 @@ def implicit(total_steps, step_size, x_0, v_0):
     return x_values, v_values
 
 # analytical solution to mass on a spring
-def analytic(total_steps, step_size, x_0, v_0):
-    timesteps = np.arange(0, total_steps, step_size)
+def analytic(start, end, step_size, x_0, v_0):
+    steps = (end-start)/step_size
+    timesteps = np.linspace(start, end, steps+1)
     x_values = np.zeros(len(timesteps))
     v_values = np.zeros(len(timesteps))
     x_values[0] = x_0
@@ -62,45 +65,48 @@ def truncation_error(h_0, total_time, x_0, v_0):
     t_error = np.zeros(len(step_sizes))
     j = 0
     for h in step_sizes:
-        x, v = explicit(total_time, h, x_0, v_0)
-        x_analytic, v_analytic = analytic(total_time, h, x_0, v_0)
+        x, v = explicit(start, total_time, h, x_0, v_0)
+        x_analytic, v_analytic = analytic(start, total_time, h, x_0, v_0)
         error_x = global_error(x_analytic, v_analytic, x, v)[0]
         t_error[j] = np.amax(np.absolute(error_x))
         j += 1
     return step_sizes, t_error
 
 # computes normalized energy as a function of time
-def energy(total_steps, step_size, x, v):
-    timesteps = np.arange(0, total_steps, step_size)
+def energy(start, end, step_size, x, v):
+    steps = (end-start)/step_size
+    timesteps = np.linspace(start, end, steps+1)
     energy = np.zeros(len(timesteps))
     for i in range(len(timesteps)):
         energy[i] = x[i]**2 + v[i]**2
     return energy
 
 #set initial parameters
-total_steps = 20
+start = 0
+end = 2
 step_size = .1
 x_0 = 1
 v_0 = 0
 
 # creates array of t values, same as in functions defined above
-timesteps = np.arange(0, total_steps, step_size)
+steps = (end-start)/step_size
+timesteps = np.linspace(start, end, steps+1)
 
 # calculate explicit and implicit values for x and v
-x_explicit, v_explicit = explicit(total_steps, step_size, x_0, v_0)
-x_implicit, v_implicit = implicit(total_steps, step_size, x_0, v_0)
+x_explicit, v_explicit = explicit(start, end, step_size, x_0, v_0)
+x_implicit, v_implicit = implicit(start, end, step_size, x_0, v_0)
 
 # calculate analytic solution
-x_analytic, v_analytic = analytic(total_steps, step_size, x_0, v_0)
+x_analytic, v_analytic = analytic(start, end, step_size, x_0, v_0)
 
 # calculate global error and energy for both explicit and implicit integration
 error_x_explicit, error_v_explicit = global_error(x_analytic, v_analytic, x_explicit, v_explicit)
 error_x_implicit, error_v_implicit = global_error(x_analytic, v_analytic, x_implicit, v_implicit)
-energy_explicit = energy(total_steps, step_size, x_explicit, v_explicit)
-energy_implicit = energy(total_steps, step_size, x_implicit, v_implicit)
+energy_explicit = energy(start, end, step_size, x_explicit, v_explicit)
+energy_implicit = energy(start, end, step_size, x_implicit, v_implicit)
 
 #calculate truncation error
-h_values, truncation_error = truncation_error(step_size, total_steps, x_0, v_0)
+h_values, truncation_error = truncation_error(step_size, end, x_0, v_0)
 
 # uncomment line(s) that you wish to plot:
 
