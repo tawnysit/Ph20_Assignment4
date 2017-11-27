@@ -25,37 +25,37 @@ where $\omega = \sqrt{\frac{k}{m}}$. Therefore, we see that
 $$v(t) = x'(t) = -x(0)\omega\sin(\omega t) + x'(0)\cos(\omega t)$$
 We use this solution with $ \omega = 1 $ as the analytic solution in our Python program. The following is the plot of $x(t)$ and $v(t)$ as a function of time, with $ x(0) = 1 $ and $ v(0) = 0 $:
 
-\includegraphics[scale=0.9]{images/analytic_solution.png}
+\includegraphics[scale=0.9]{analytic_solution.jpg}
 
 \section{The Explicit Euler Method}
 
 \subsection{Numerical Integration}
 Implementing the explicit Euler method in Python was simple and straightforward given the equations for $x_{i+1}$ and $v_{i+1}$. The following graph was produced with the same conditions as the graph of the analytic solution, namely $ x(0) = 1 $ and $ v(0) = 0 $. The step size was set to $ h = 0.1 $ which was small enough to produce a smooth graph and large enough to show visible errors within a few oscillations.
 
-\includegraphics[scale=0.9]{images/explicit_solution.png}
+\includegraphics[scale=0.9]{explicit_solution.jpg}
 
 For comparison, a plot of the analytic solution and the numerical integration:
 
-\includegraphics[scale=0.9]{images/analytic_vs_explicit.png}
+\includegraphics[scale=0.9]{analytic_vs_explicit.jpg}
 
 \subsection{Global Errors}
 The global error was computed for each time step using $ x_{analytic}(t_i) - x(t_i) $ and $ v_{analytic}(t_i) - v(t_i) $.
 
-\includegraphics[scale=0.9]{images/explicit_error.png}
+\includegraphics[scale=0.9]{explicit_error.jpg}
 
 The absolute magnitude of the error clearly increases with time.
 
 \subsection{Truncation Error}
 The truncation error was calculated to be the maximum global error for a certain time step size. The step sizes used were $h_0, \frac{h_0}{2}, \frac{h_0}{4}, \frac{h_0}{8}, \frac{h_0}{16}$ with $h_0 = 0.1$.
 
-\includegraphics[scale=0.9]{images/truncation_error.png}
+\includegraphics[scale=0.9]{truncation_error.jpg}
 
 The error clearly grows with step size, but it appears more exponential than simply linearly proportional as suggested in the assignment.
 
 \subsection{Evolution of Total Energy}
 The normalized energy $E = x^2 + v^2 $ was calculated with the $x$ and $v$ values from numerical integration.
 
-\includegraphics[scale=0.9]{images/explicit_energy.png}
+\includegraphics[scale=0.9]{explicit_energy.jpg}
 
 We know that the energy in a simple harmonic oscillator should be conserved, but the numerical integration clearly shows that the energy in the system grows exponentially. The growth of the energy in the system increases with time with the error in the numerical integration.
 
@@ -127,31 +127,31 @@ $$ v_{i+1} = \frac{v_i - hx_i}{h^2 + 1} $$
 \subsection{Numerical Integration}
 Once the formulas for $ x_{i+1} $ and $ v_{i+1} $ were found as seen above, implementing the implicit Euler method was the same as with the explicit Euler method, just with different formulas for $ x_{i+1} $ and $ v_{i+1} $. The following graph was produced with the same conditions as the explicit integration, $ x(0) = 1 $, $ v(0) = 1 $, and $ h = 0.1 $.
 
-\includegraphics[scale=0.9]{images/implicit_solution.png}
+\includegraphics[scale=0.9]{implicit_solution.jpg}
 
 For easier comparison, a plot of the analytic solution and the implicit integration:
 
-\includegraphics[scale=0.9]{images/analytic_vs_implicit.png}
+\includegraphics[scale=0.9]{analytic_vs_implicit.jpg}
 
 Unlike the explicit case, the error using the implicit method seems to come from the values decreasing rather than increasing. For more direct comparison, the explicit and implicit method results on the same graph:
 
-\includegraphics[scale=0.9]{images/implicit_vs_explicit.png}
+\includegraphics[scale=0.9]{implicit_vs_explicit.jpg}
 
 \subsection{Global Errors}
 The same process as the explicit method was used to calculate global error for the implicit method.
 
-\includegraphics[scale=0.9]{images/implicit_error.png}
+\includegraphics[scale=0.9]{implicit_error.jpg}
 
 Despite the opposite trend in actual values, the implicit method still produces increasing error over time. However, the following plot of implicit vs. explicit error shows that despite the increase, the implicit method's error increases more slowly compared to the explicit method:
 
-\includegraphics[scale=0.9]{images/implicit_vs_explicit_error.png}
+\includegraphics[scale=0.9]{implicit_vs_explicit_error.jpg}
 
 Additionally, it is interesting to note that the times of positive and negative error values are switched for the implict and explicit integrations.
 
 \subsection{Evolution of Total Energy}
 The same process as the explicit method was used to calculate global error for the implicit method.
 
-\includegraphics[scale=0.9]{images/implicit_energy.png}
+\includegraphics[scale=0.9]{implicit_energy.jpg}
 
 Unlike the explicit case, energy decreases over time for the implicit integration. However, this is still not we would expect from a simple harmonic oscillator which conserves energy.
 
@@ -159,26 +159,26 @@ Unlike the explicit case, energy decreases over time for the implicit integratio
 \subsection{The Explicit and Implicit Euler Methods}
 It is known that the phase space plot, $x$ vs. $v$, should be a closed circle (or oval, if the physical scale of each side of the plot is different). To check, the following is a plot of just the analytic solution's phase space geometry:
 
-\includegraphics[scale=0.9]{images/analytic_phasespace.png}
+\includegraphics[scale=0.9]{analytic_phasespace.jpg}
 
 This is exactly what we expect. Next, we plot the explicit and implicit phase space geometries with the analytic geometry for comparison:
 
-\includegraphics[scale=0.9]{images/implicit_vs_explicit_vs_analytic_phasespace.png}
+\includegraphics[scale=0.9]{implicit_vs_explicit_vs_analytic_phasespace.jpg}
 
 It is very clear that the explicit and implicit solutions do not form closed circles; rather, they form spiral shapes. For this plot, the total time of integration was set to 10 rather than the previous 20 so as not to clutter the plot too much, but the step size was still $ h = 0.1 $.
 
 \subsection{The Sympletic Euler Method}
 The sympletic Euler method was coded the same way as the explicit and implicit methods with the notable constraint that due to the dependence on $ x_{i+1} $ of $ v_{i+1} $, the value of $ v_{i+1} $ \textit{had} to be calculated \textit{after} $ x_{i+1} $ was calculated. For the previous methods, the order did not matter; it was an arbitary choice to calculate $ x_{i+1} $ before $ v_{i+1} $. For the same $ h = 0.1 $, the phase space plot using the sympletic Euler method is
 
-\includegraphics[scale=0.9]{images/sympletic_phasespace.png}
+\includegraphics[scale=0.9]{sympletic_phasespace.jpg}
 
 This is only slightly different (but still different!) than the phase space plot of the analytic solution, as shown:
 
-\includegraphics[scale=0.9]{images/analytic_vs_sympletic_phasespace.png}
+\includegraphics[scale=0.9]{analytic_vs_sympletic_phasespace.jpg}
 \subsection{Energy of the Sympletic Euler Method}
 The plot of the energy (still defined $ E = x^2 + v^2 $) of the sympletic Euler method vs. the analytic energy speaks for itself. The step size used was still $ h = 0.1 $.
 
-\includegraphics[scale=0.9]{images/analytic_vs_sympletic_energy.png}
+\includegraphics[scale=0.9]{analytic_vs_sympletic_energy.jpg}
 
 The energy from the sympletic integration is sinusoidal; it should average to the appropriate constant value over time but is not at that value over small time intervals. This is reflective of what was seen in the analytic vs. sympletic phase space diagram where the sympletic geometry was also a closed loop but it was tilted such that certain parts of the sympletic trajectory were inside the analytic circle and other parts outside. These likely correspond to the sinusoidal nature of the sympletic energy.
 
