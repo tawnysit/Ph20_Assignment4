@@ -89,11 +89,11 @@ def sympletic(start, end, step_size, x_0, v_0):
     return x_values, v_values
 
 #set initial parameters
-start = float(sys.argv[1]) #0
-end = float(sys.argv[2]) #20
-step_size = float(sys.argv[3]) #.1
-x_0 = float(sys.argv[4]) #1
-v_0 = float(sys.argv[5]) #0
+start = 0
+end = 20
+step_size = .1
+x_0 = 1
+v_0 = 0
 
 # creates array of t values, same as in functions defined above
 steps = (end-start)/step_size
